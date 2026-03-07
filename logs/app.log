@@ -1,0 +1,4 @@
+2026-03-07 20:16:42 | INFO | rag.knowledge_loader:load_documents:25 | 12 documents loaded from knowledge base
+2026-03-07 20:16:48 | INFO | rag.vector_store:build:31 | Vector store built successfully
+2026-03-07 20:44:56 | INFO | rag.knowledge_loader:load_documents:25 | 12 documents loaded from knowledge base
+2026-03-07 20:46:49 | INFO | rag.vector_store:build:31 | Vector store built successfully

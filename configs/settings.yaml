@@ -1,0 +1,45 @@
+app:
+  name: "Math Mentor AI"
+  version: "1.0.0"
+  environment: "development"
+
+api:
+  grok_base_url: "https://api.x.ai/v1"
+  model: "grok-2-latest"
+  timeout_seconds: 60
+
+rag:
+  embedding_model: "sentence-transformers/all-MiniLM-L6-v2"
+  vector_store_path: "vector_store"
+  chunk_size: 500
+  chunk_overlap: 100
+  top_k: 5
+
+ocr:
+  engine: "easyocr"
+  languages:
+    - en
+  confidence_threshold: 0.75
+
+speech:
+  model: "base"
+  language: "en"
+
+solver:
+  max_steps: 10
+  allow_symbolic: true
+
+verification:
+  confidence_threshold: 0.7
+
+memory:
+  database_path: "memory/memory.db"
+  similarity_threshold: 0.8
+  max_similar_results: 3
+
+hitl:
+  enabled: true
+  trigger_on_low_confidence: true
+
+logging:
+  level: "INFO"

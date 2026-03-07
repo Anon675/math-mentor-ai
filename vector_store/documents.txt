@@ -1,0 +1,12 @@
+# Common Algebra Mistakes  Forgetting ± in quadratic formula  Incorrectly simplifying radicals  Sign mistakes in expansion
+# Algebra Formulas  Quadratic Formula: x = (-b ± √(b² - 4ac)) / 2a  Difference of Squares: a² - b² = (a - b)(a + b)  Perfect Square: (a + b)² = a² + 2ab + b²  (a - b)² = a² - 2ab + b²
+# Algebra Solution Templates  Quadratic Equation Steps  1. Identify coefficients a, b, c 2. Apply quadratic formula 3. Simplify radical 4. Present two solutions
+# Common Calculus Mistakes  Forgetting chain rule  Wrong power rule  Sign errors in trigonometric derivatives
+# Calculus Formulas  Derivative Rules  d/dx (x^n) = n*x^(n-1)  d/dx (sin x) = cos x  d/dx (cos x) = -sin x  Product Rule  d/dx (uv) = u'v + uv'
+# Calculus Solution Templates  Derivative Calculation  1. Identify function 2. Apply derivative rule 3. Simplify 4. Substitute values if required
+# Common Linear Algebra Mistakes  Incorrect matrix dimension matching  Sign errors in vector components
+# Linear Algebra Formulas  Vector Magnitude  |v| = sqrt(x² + y² + z²)  Dot Product  A · B = |A||B|cosθ  Matrix Multiplication  C[i][j] = Σ A[i][k] * B[k][j]
+# Linear Algebra Templates  Vector Dot Product  1. Multiply corresponding components 2. Sum results 3. Present scalar answer
+# Common Probability Mistakes  Confusing independent and dependent events  Incorrect sample space counting
+# Probability Formulas  Basic Probability  P(A) = Number of favorable outcomes / Total outcomes  Addition Rule  P(A ∪ B) = P(A) + P(B) − P(A ∩ B)  Multiplication Rule  P(A ∩ B) = P(A) * P(B|A)
+# Probability Solution Templates  1. Identify sample space 2. Identify favorable outcomes 3. Apply probability formula 4. Simplify result
