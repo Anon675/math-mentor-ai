@@ -4,6 +4,7 @@ requests
 pydantic
 numpy
 pandas
+pytest
 
 langchain
 langchain-community
