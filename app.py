@@ -55,9 +55,15 @@ elif mode == "Image" and uploaded_file is not None:
     confidence = processed["confidence"]
 
 elif mode == "Audio" and uploaded_file is not None:
-    with tempfile.NamedTemporaryFile(delete=False) as tmp:
-        tmp.write(uploaded_file.read())
-        path = tmp.name
+
+    if isinstance(uploaded_file, str):
+        # recorded audio path
+        path = uploaded_file
+    else:
+        # uploaded audio file
+        with tempfile.NamedTemporaryFile(delete=False) as tmp:
+            tmp.write(uploaded_file.read())
+            path = tmp.name
 
     processed = audio_processor.process(path)
     problem_text = processed["transcript"]

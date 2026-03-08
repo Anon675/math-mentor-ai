@@ -2,3 +2,646 @@
 2026-03-07 20:16:48 | INFO | rag.vector_store:build:31 | Vector store built successfully
 2026-03-07 20:44:56 | INFO | rag.knowledge_loader:load_documents:25 | 12 documents loaded from knowledge base
 2026-03-07 20:46:49 | INFO | rag.vector_store:build:31 | Vector store built successfully
+2026-03-08 13:57:26 | INFO | rag.knowledge_loader:load_documents:25 | 12 documents loaded from knowledge base
+2026-03-08 13:57:32 | INFO | rag.vector_store:build:31 | Vector store built successfully
+2026-03-08 13:59:54 | ERROR | __main__:<module>:77 | Pipeline failed
+Traceback (most recent call last):
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001565D580940>
+    └ <Thread(ScriptRunner.scriptThread, started 27320)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x000001565D580670>
+    └ <Thread(ScriptRunner.scriptThread, started 27320)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(ScriptRunner.scriptThread, started 27320)>
+    │    │        │    └ ()
+    │    │        └ <Thread(ScriptRunner.scriptThread, started 27320)>
+    │    └ <bound method ScriptRunner._run_script_thread of ScriptRunner(_session_id='1d76f9f7-87cd-4a74-91fc-4245c216d541', _main_scrip...
+    └ <Thread(ScriptRunner.scriptThread, started 27320)>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+    │    │           │       └ <property object at 0x000001565FC2BE20>
+    │    │           └ ScriptRequest(type=<ScriptRequestType.RERUN: 'RERUN'>, _rerun_data=RerunData(widget_states=widgets {
+    │    │               id: "$$ID-d8d14a9bb459...
+    │    └ <function ScriptRunner._run_script at 0x000001565FDAA560>
+    └ ScriptRunner(_session_id='1d76f9f7-87cd-4a74-91fc-4245c216d541', _main_script_path='C:\\Users\\amans\\OneDrive\\Desktop\\math...
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+        │                             │             └ ScriptRunContext(session_id='1d76f9f7-87cd-4a74-91fc-4245c216d541', _enqueue=<bound method ScriptRunner._enqueue_forward_msg ...
+        │                             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x0000015657E9A320>
+        └ <function exec_func_with_error_handling at 0x000001565FD27D00>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x0000015657E9A320>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+         │     │      └ <member '__dict__' of 'module' objects>
+         │     └ <module '__main__' from 'C:\\Users\\amans\\OneDrive\\Desktop\\math-mentor-ai\\app.py'>
+         └ <code object <module> at 0x000001565C2A6340, file "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 1>
+
+> File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 72, in <module>
+    result = agent_manager.run_pipeline(problem_text)
+             │             │            └ 'Solve x^2 + 5x + 6 = 0'
+             │             └ <function AgentManager.run_pipeline at 0x000001565C5E5120>
+             └ <agents.agent_manager.AgentManager object at 0x000001565B270670>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\agent_manager.py", line 26, in run_pipeline
+    parsed = self.parser.parse(problem_text)
+             │    │      │     └ 'Solve x^2 + 5x + 6 = 0'
+             │    │      └ <function ParserAgent.parse at 0x000001565C5E5EA0>
+             │    └ <agents.parser_agent.ParserAgent object at 0x000001566132B0D0>
+             └ <agents.agent_manager.AgentManager object at 0x000001565B270670>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\parser_agent.py", line 43, in parse
+    response.raise_for_status()
+    │        └ <function Response.raise_for_status at 0x00000156612B9E10>
+    └ <Response [400]>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+          │         │                        └ <Response [400]>
+          │         └ '400 Client Error: Bad Request for url: https://api.x.ai/v1/chat/completions'
+          └ <class 'requests.exceptions.HTTPError'>
+
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.x.ai/v1/chat/completions
+2026-03-08 14:04:40 | ERROR | agents.parser_agent:parse:66 | Parser agent failed
+Traceback (most recent call last):
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000205092D0940>
+    └ <Thread(ScriptRunner.scriptThread, started 22724)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000205092D0670>
+    └ <Thread(ScriptRunner.scriptThread, started 22724)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(ScriptRunner.scriptThread, started 22724)>
+    │    │        │    └ ()
+    │    │        └ <Thread(ScriptRunner.scriptThread, started 22724)>
+    │    └ <bound method ScriptRunner._run_script_thread of ScriptRunner(_session_id='6b950f95-b970-46a3-86c5-621e4e0547b7', _main_scrip...
+    └ <Thread(ScriptRunner.scriptThread, started 22724)>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+    │    │           │       └ <property object at 0x000002050B96BE20>
+    │    │           └ ScriptRequest(type=<ScriptRequestType.RERUN: 'RERUN'>, _rerun_data=RerunData(widget_states=widgets {
+    │    │               id: "$$ID-d8d14a9bb459...
+    │    └ <function ScriptRunner._run_script at 0x000002050BAEA560>
+    └ ScriptRunner(_session_id='6b950f95-b970-46a3-86c5-621e4e0547b7', _main_script_path='C:\\Users\\amans\\OneDrive\\Desktop\\math...
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+        │                             │             └ ScriptRunContext(session_id='6b950f95-b970-46a3-86c5-621e4e0547b7', _enqueue=<bound method ScriptRunner._enqueue_forward_msg ...
+        │                             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x000002050CC2C310>
+        └ <function exec_func_with_error_handling at 0x000002050BA67D00>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x000002050CC2C310>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+         │     │      └ <member '__dict__' of 'module' objects>
+         │     └ <module '__main__' from 'C:\\Users\\amans\\OneDrive\\Desktop\\math-mentor-ai\\app.py'>
+         └ <code object <module> at 0x000002050CDE0B30, file "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 1>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 72, in <module>
+    result = agent_manager.run_pipeline(problem_text)
+             │             │            └ 'Solve x^2 + 5x + 6 = 0'
+             │             └ <function AgentManager.run_pipeline at 0x000002059B8DA4D0>
+             └ <agents.agent_manager.AgentManager object at 0x00000205A1C9ACE0>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\agent_manager.py", line 26, in run_pipeline
+    parsed = self.parser.parse(problem_text)
+             │    │      │     └ 'Solve x^2 + 5x + 6 = 0'
+             │    │      └ <function ParserAgent.parse at 0x000002050D0E9BD0>
+             │    └ <agents.parser_agent.ParserAgent object at 0x00000205A1C99B10>
+             └ <agents.agent_manager.AgentManager object at 0x00000205A1C9ACE0>
+
+> File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\parser_agent.py", line 48, in parse
+    response.raise_for_status()
+    │        └ <function Response.raise_for_status at 0x000002050CFC2680>
+    └ <Response [400]>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+          │         │                        └ <Response [400]>
+          │         └ '400 Client Error: Bad Request for url: https://api.x.ai/v1/chat/completions'
+          └ <class 'requests.exceptions.HTTPError'>
+
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.x.ai/v1/chat/completions
+2026-03-08 14:04:40 | ERROR | __main__:<module>:77 | Pipeline failed
+Traceback (most recent call last):
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x00000205092D0940>
+    └ <Thread(ScriptRunner.scriptThread, started 22724)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x00000205092D0670>
+    └ <Thread(ScriptRunner.scriptThread, started 22724)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(ScriptRunner.scriptThread, started 22724)>
+    │    │        │    └ ()
+    │    │        └ <Thread(ScriptRunner.scriptThread, started 22724)>
+    │    └ <bound method ScriptRunner._run_script_thread of ScriptRunner(_session_id='6b950f95-b970-46a3-86c5-621e4e0547b7', _main_scrip...
+    └ <Thread(ScriptRunner.scriptThread, started 22724)>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+    │    │           │       └ <property object at 0x000002050B96BE20>
+    │    │           └ ScriptRequest(type=<ScriptRequestType.RERUN: 'RERUN'>, _rerun_data=RerunData(widget_states=widgets {
+    │    │               id: "$$ID-d8d14a9bb459...
+    │    └ <function ScriptRunner._run_script at 0x000002050BAEA560>
+    └ ScriptRunner(_session_id='6b950f95-b970-46a3-86c5-621e4e0547b7', _main_script_path='C:\\Users\\amans\\OneDrive\\Desktop\\math...
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+        │                             │             └ ScriptRunContext(session_id='6b950f95-b970-46a3-86c5-621e4e0547b7', _enqueue=<bound method ScriptRunner._enqueue_forward_msg ...
+        │                             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x000002050CC2C310>
+        └ <function exec_func_with_error_handling at 0x000002050BA67D00>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x000002050CC2C310>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+         │     │      └ <member '__dict__' of 'module' objects>
+         │     └ <module '__main__' from 'C:\\Users\\amans\\OneDrive\\Desktop\\math-mentor-ai\\app.py'>
+         └ <code object <module> at 0x000002050CDE0B30, file "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 1>
+
+> File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 72, in <module>
+    result = agent_manager.run_pipeline(problem_text)
+             │             │            └ 'Solve x^2 + 5x + 6 = 0'
+             │             └ <function AgentManager.run_pipeline at 0x000002059B8DA4D0>
+             └ <agents.agent_manager.AgentManager object at 0x00000205A1C9ACE0>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\agent_manager.py", line 28, in run_pipeline
+    topic = self.router.classify(problem_text)
+            │    │      │        └ 'Solve x^2 + 5x + 6 = 0'
+            │    │      └ <function IntentRouterAgent.classify at 0x000002050D0E9EA0>
+            │    └ <agents.intent_router_agent.IntentRouterAgent object at 0x00000205A1C9AD70>
+            └ <agents.agent_manager.AgentManager object at 0x00000205A1C9ACE0>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\intent_router_agent.py", line 44, in classify
+    response.raise_for_status()
+    │        └ <function Response.raise_for_status at 0x000002050CFC2680>
+    └ <Response [400]>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+          │         │                        └ <Response [400]>
+          │         └ '400 Client Error: Bad Request for url: https://api.x.ai/v1/chat/completions'
+          └ <class 'requests.exceptions.HTTPError'>
+
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.x.ai/v1/chat/completions
+2026-03-08 14:13:27 | ERROR | agents.parser_agent:parse:66 | Parser agent failed
+Traceback (most recent call last):
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000027382DE0940>
+    └ <Thread(ScriptRunner.scriptThread, started 31664)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x0000027382DE0670>
+    └ <Thread(ScriptRunner.scriptThread, started 31664)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(ScriptRunner.scriptThread, started 31664)>
+    │    │        │    └ ()
+    │    │        └ <Thread(ScriptRunner.scriptThread, started 31664)>
+    │    └ <bound method ScriptRunner._run_script_thread of ScriptRunner(_session_id='e0bffcef-9819-418f-a987-6977bed8ef08', _main_scrip...
+    └ <Thread(ScriptRunner.scriptThread, started 31664)>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+    │    │           │       └ <property object at 0x00000273854ABE20>
+    │    │           └ ScriptRequest(type=<ScriptRequestType.RERUN: 'RERUN'>, _rerun_data=RerunData(widget_states=widgets {
+    │    │               id: "$$ID-d8d14a9bb459...
+    │    └ <function ScriptRunner._run_script at 0x000002738562A560>
+    └ ScriptRunner(_session_id='e0bffcef-9819-418f-a987-6977bed8ef08', _main_script_path='C:\\Users\\amans\\OneDrive\\Desktop\\math...
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+        │                             │             └ ScriptRunContext(session_id='e0bffcef-9819-418f-a987-6977bed8ef08', _enqueue=<bound method ScriptRunner._enqueue_forward_msg ...
+        │                             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x00000273C4EF23B0>
+        └ <function exec_func_with_error_handling at 0x00000273855A7D00>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x00000273C4EF23B0>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+         │     │      └ <member '__dict__' of 'module' objects>
+         │     └ <module '__main__' from 'C:\\Users\\amans\\OneDrive\\Desktop\\math-mentor-ai\\app.py'>
+         └ <code object <module> at 0x00000273867D0DF0, file "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 1>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 72, in <module>
+    result = agent_manager.run_pipeline(problem_text)
+             │             │            └ 'Solve x^2 + 5x + 6 = 0'
+             │             └ <function AgentManager.run_pipeline at 0x000002741E3FA560>
+             └ <agents.agent_manager.AgentManager object at 0x00000274237B46A0>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\agent_manager.py", line 26, in run_pipeline
+    parsed = self.parser.parse(problem_text)
+             │    │      │     └ 'Solve x^2 + 5x + 6 = 0'
+             │    │      └ <function ParserAgent.parse at 0x0000027386C29C60>
+             │    └ <agents.parser_agent.ParserAgent object at 0x00000274237E2CB0>
+             └ <agents.agent_manager.AgentManager object at 0x00000274237B46A0>
+
+> File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\parser_agent.py", line 48, in parse
+    response.raise_for_status()
+    │        └ <function Response.raise_for_status at 0x0000027386AF2680>
+    └ <Response [403]>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+          │         │                        └ <Response [403]>
+          │         └ '403 Client Error: Forbidden for url: https://api.x.ai/v1/chat/completions'
+          └ <class 'requests.exceptions.HTTPError'>
+
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://api.x.ai/v1/chat/completions
+2026-03-08 14:13:28 | ERROR | __main__:<module>:77 | Pipeline failed
+Traceback (most recent call last):
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000027382DE0940>
+    └ <Thread(ScriptRunner.scriptThread, started 31664)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x0000027382DE0670>
+    └ <Thread(ScriptRunner.scriptThread, started 31664)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(ScriptRunner.scriptThread, started 31664)>
+    │    │        │    └ ()
+    │    │        └ <Thread(ScriptRunner.scriptThread, started 31664)>
+    │    └ <bound method ScriptRunner._run_script_thread of ScriptRunner(_session_id='e0bffcef-9819-418f-a987-6977bed8ef08', _main_scrip...
+    └ <Thread(ScriptRunner.scriptThread, started 31664)>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+    │    │           │       └ <property object at 0x00000273854ABE20>
+    │    │           └ ScriptRequest(type=<ScriptRequestType.RERUN: 'RERUN'>, _rerun_data=RerunData(widget_states=widgets {
+    │    │               id: "$$ID-d8d14a9bb459...
+    │    └ <function ScriptRunner._run_script at 0x000002738562A560>
+    └ ScriptRunner(_session_id='e0bffcef-9819-418f-a987-6977bed8ef08', _main_script_path='C:\\Users\\amans\\OneDrive\\Desktop\\math...
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+        │                             │             └ ScriptRunContext(session_id='e0bffcef-9819-418f-a987-6977bed8ef08', _enqueue=<bound method ScriptRunner._enqueue_forward_msg ...
+        │                             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x00000273C4EF23B0>
+        └ <function exec_func_with_error_handling at 0x00000273855A7D00>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x00000273C4EF23B0>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+         │     │      └ <member '__dict__' of 'module' objects>
+         │     └ <module '__main__' from 'C:\\Users\\amans\\OneDrive\\Desktop\\math-mentor-ai\\app.py'>
+         └ <code object <module> at 0x00000273867D0DF0, file "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 1>
+
+> File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 72, in <module>
+    result = agent_manager.run_pipeline(problem_text)
+             │             │            └ 'Solve x^2 + 5x + 6 = 0'
+             │             └ <function AgentManager.run_pipeline at 0x000002741E3FA560>
+             └ <agents.agent_manager.AgentManager object at 0x00000274237B46A0>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\agent_manager.py", line 28, in run_pipeline
+    topic = self.router.classify(problem_text)
+            │    │      │        └ 'Solve x^2 + 5x + 6 = 0'
+            │    │      └ <function IntentRouterAgent.classify at 0x0000027386C29F30>
+            │    └ <agents.intent_router_agent.IntentRouterAgent object at 0x00000274237E3E50>
+            └ <agents.agent_manager.AgentManager object at 0x00000274237B46A0>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\intent_router_agent.py", line 44, in classify
+    response.raise_for_status()
+    │        └ <function Response.raise_for_status at 0x0000027386AF2680>
+    └ <Response [403]>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+          │         │                        └ <Response [403]>
+          │         └ '403 Client Error: Forbidden for url: https://api.x.ai/v1/chat/completions'
+          └ <class 'requests.exceptions.HTTPError'>
+
+requests.exceptions.HTTPError: 403 Client Error: Forbidden for url: https://api.x.ai/v1/chat/completions
+2026-03-08 14:15:00 | ERROR | agents.parser_agent:parse:66 | Parser agent failed
+Traceback (most recent call last):
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001A8C8430940>
+    └ <Thread(ScriptRunner.scriptThread, started 25024)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x000001A8C8430670>
+    └ <Thread(ScriptRunner.scriptThread, started 25024)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(ScriptRunner.scriptThread, started 25024)>
+    │    │        │    └ ()
+    │    │        └ <Thread(ScriptRunner.scriptThread, started 25024)>
+    │    └ <bound method ScriptRunner._run_script_thread of ScriptRunner(_session_id='32528be8-1788-4912-b30f-f6bf2a5e2d6b', _main_scrip...
+    └ <Thread(ScriptRunner.scriptThread, started 25024)>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+    │    │           │       └ <property object at 0x000001A8CAB1BE20>
+    │    │           └ ScriptRequest(type=<ScriptRequestType.RERUN: 'RERUN'>, _rerun_data=RerunData(widget_states=widgets {
+    │    │               id: "$$ID-d8d14a9bb459...
+    │    └ <function ScriptRunner._run_script at 0x000001A8CAC9A560>
+    └ ScriptRunner(_session_id='32528be8-1788-4912-b30f-f6bf2a5e2d6b', _main_script_path='C:\\Users\\amans\\OneDrive\\Desktop\\math...
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+        │                             │             └ ScriptRunContext(session_id='32528be8-1788-4912-b30f-f6bf2a5e2d6b', _enqueue=<bound method ScriptRunner._enqueue_forward_msg ...
+        │                             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x000001A8CBD93B50>
+        └ <function exec_func_with_error_handling at 0x000001A8CAC17D00>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x000001A8CBD93B50>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+         │     │      └ <member '__dict__' of 'module' objects>
+         │     └ <module '__main__' from 'C:\\Users\\amans\\OneDrive\\Desktop\\math-mentor-ai\\app.py'>
+         └ <code object <module> at 0x000001A8CBF80920, file "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 1>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 72, in <module>
+    result = agent_manager.run_pipeline(problem_text)
+             │             │            └ 'Solve x^2 + 5x + 6 = 0'
+             │             └ <function AgentManager.run_pipeline at 0x000001A8C3A5E0E0>
+             └ <agents.agent_manager.AgentManager object at 0x000001A8C720F370>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\agent_manager.py", line 26, in run_pipeline
+    parsed = self.parser.parse(problem_text)
+             │    │      │     └ 'Solve x^2 + 5x + 6 = 0'
+             │    │      └ <function ParserAgent.parse at 0x000001A8CC2957E0>
+             │    └ <agents.parser_agent.ParserAgent object at 0x000001A8C720EE30>
+             └ <agents.agent_manager.AgentManager object at 0x000001A8C720F370>
+
+> File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\parser_agent.py", line 48, in parse
+    response.raise_for_status()
+    │        └ <function Response.raise_for_status at 0x000001A8CC162290>
+    └ <Response [400]>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+          │         │                        └ <Response [400]>
+          │         └ '400 Client Error: Bad Request for url: https://api.groq.com/openai/v1/chat/completions'
+          └ <class 'requests.exceptions.HTTPError'>
+
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.groq.com/openai/v1/chat/completions
+2026-03-08 14:15:00 | ERROR | __main__:<module>:77 | Pipeline failed
+Traceback (most recent call last):
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x000001A8C8430940>
+    └ <Thread(ScriptRunner.scriptThread, started 25024)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x000001A8C8430670>
+    └ <Thread(ScriptRunner.scriptThread, started 25024)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(ScriptRunner.scriptThread, started 25024)>
+    │    │        │    └ ()
+    │    │        └ <Thread(ScriptRunner.scriptThread, started 25024)>
+    │    └ <bound method ScriptRunner._run_script_thread of ScriptRunner(_session_id='32528be8-1788-4912-b30f-f6bf2a5e2d6b', _main_scrip...
+    └ <Thread(ScriptRunner.scriptThread, started 25024)>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+    │    │           │       └ <property object at 0x000001A8CAB1BE20>
+    │    │           └ ScriptRequest(type=<ScriptRequestType.RERUN: 'RERUN'>, _rerun_data=RerunData(widget_states=widgets {
+    │    │               id: "$$ID-d8d14a9bb459...
+    │    └ <function ScriptRunner._run_script at 0x000001A8CAC9A560>
+    └ ScriptRunner(_session_id='32528be8-1788-4912-b30f-f6bf2a5e2d6b', _main_script_path='C:\\Users\\amans\\OneDrive\\Desktop\\math...
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+        │                             │             └ ScriptRunContext(session_id='32528be8-1788-4912-b30f-f6bf2a5e2d6b', _enqueue=<bound method ScriptRunner._enqueue_forward_msg ...
+        │                             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x000001A8CBD93B50>
+        └ <function exec_func_with_error_handling at 0x000001A8CAC17D00>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x000001A8CBD93B50>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+         │     │      └ <member '__dict__' of 'module' objects>
+         │     └ <module '__main__' from 'C:\\Users\\amans\\OneDrive\\Desktop\\math-mentor-ai\\app.py'>
+         └ <code object <module> at 0x000001A8CBF80920, file "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 1>
+
+> File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 72, in <module>
+    result = agent_manager.run_pipeline(problem_text)
+             │             │            └ 'Solve x^2 + 5x + 6 = 0'
+             │             └ <function AgentManager.run_pipeline at 0x000001A8C3A5E0E0>
+             └ <agents.agent_manager.AgentManager object at 0x000001A8C720F370>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\agent_manager.py", line 28, in run_pipeline
+    topic = self.router.classify(problem_text)
+            │    │      │        └ 'Solve x^2 + 5x + 6 = 0'
+            │    │      └ <function IntentRouterAgent.classify at 0x000001A8CC295AB0>
+            │    └ <agents.intent_router_agent.IntentRouterAgent object at 0x000001A8C721B880>
+            └ <agents.agent_manager.AgentManager object at 0x000001A8C720F370>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\intent_router_agent.py", line 44, in classify
+    response.raise_for_status()
+    │        └ <function Response.raise_for_status at 0x000001A8CC162290>
+    └ <Response [400]>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+          │         │                        └ <Response [400]>
+          │         └ '400 Client Error: Bad Request for url: https://api.groq.com/openai/v1/chat/completions'
+          └ <class 'requests.exceptions.HTTPError'>
+
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.groq.com/openai/v1/chat/completions
+2026-03-08 14:20:03 | ERROR | agents.parser_agent:parse:82 | ParserAgent failed
+Traceback (most recent call last):
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000025A18180940>
+    └ <Thread(ScriptRunner.scriptThread, started 21960)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x0000025A18180670>
+    └ <Thread(ScriptRunner.scriptThread, started 21960)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(ScriptRunner.scriptThread, started 21960)>
+    │    │        │    └ ()
+    │    │        └ <Thread(ScriptRunner.scriptThread, started 21960)>
+    │    └ <bound method ScriptRunner._run_script_thread of ScriptRunner(_session_id='987a0c92-6b78-4916-9003-529e8d073816', _main_scrip...
+    └ <Thread(ScriptRunner.scriptThread, started 21960)>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+    │    │           │       └ <property object at 0x0000025A1A84BDD0>
+    │    │           └ ScriptRequest(type=<ScriptRequestType.RERUN: 'RERUN'>, _rerun_data=RerunData(widget_states=widgets {
+    │    │               id: "$$ID-d8d14a9bb459...
+    │    └ <function ScriptRunner._run_script at 0x0000025A1A9CA560>
+    └ ScriptRunner(_session_id='987a0c92-6b78-4916-9003-529e8d073816', _main_script_path='C:\\Users\\amans\\OneDrive\\Desktop\\math...
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+        │                             │             └ ScriptRunContext(session_id='987a0c92-6b78-4916-9003-529e8d073816', _enqueue=<bound method ScriptRunner._enqueue_forward_msg ...
+        │                             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x0000025A1BCA3C70>
+        └ <function exec_func_with_error_handling at 0x0000025A1A947D00>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x0000025A1BCA3C70>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+         │     │      └ <member '__dict__' of 'module' objects>
+         │     └ <module '__main__' from 'C:\\Users\\amans\\OneDrive\\Desktop\\math-mentor-ai\\app.py'>
+         └ <code object <module> at 0x0000025A1BCB0660, file "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 1>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 72, in <module>
+    result = agent_manager.run_pipeline(problem_text)
+             │             │            └ 'Solve x^2 + 5x + 6 = 0'
+             │             └ <function AgentManager.run_pipeline at 0x0000025AA378A560>
+             └ <agents.agent_manager.AgentManager object at 0x0000025AA3ACB3D0>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\agent_manager.py", line 26, in run_pipeline
+    parsed = self.parser.parse(problem_text)
+             │    │      │     └ 'Solve x^2 + 5x + 6 = 0'
+             │    │      └ <function ParserAgent.parse at 0x0000025A1BFC9C60>
+             │    └ <agents.parser_agent.ParserAgent object at 0x0000025A3DAED270>
+             └ <agents.agent_manager.AgentManager object at 0x0000025AA3ACB3D0>
+
+> File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\parser_agent.py", line 58, in parse
+    response.raise_for_status()
+    │        └ <function Response.raise_for_status at 0x0000025A1BE92710>
+    └ <Response [400]>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+          │         │                        └ <Response [400]>
+          │         └ '400 Client Error: Bad Request for url: https://api.groq.com/openai/v1/chat/completions'
+          └ <class 'requests.exceptions.HTTPError'>
+
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.groq.com/openai/v1/chat/completions
+2026-03-08 14:20:03 | ERROR | __main__:<module>:77 | Pipeline failed
+Traceback (most recent call last):
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 973, in _bootstrap
+    self._bootstrap_inner()
+    │    └ <function Thread._bootstrap_inner at 0x0000025A18180940>
+    └ <Thread(ScriptRunner.scriptThread, started 21960)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 1016, in _bootstrap_inner
+    self.run()
+    │    └ <function Thread.run at 0x0000025A18180670>
+    └ <Thread(ScriptRunner.scriptThread, started 21960)>
+
+  File "C:\Users\amans\AppData\Local\Programs\Python\Python310\lib\threading.py", line 953, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Thread(ScriptRunner.scriptThread, started 21960)>
+    │    │        │    └ ()
+    │    │        └ <Thread(ScriptRunner.scriptThread, started 21960)>
+    │    └ <bound method ScriptRunner._run_script_thread of ScriptRunner(_session_id='987a0c92-6b78-4916-9003-529e8d073816', _main_scrip...
+    └ <Thread(ScriptRunner.scriptThread, started 21960)>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 379, in _run_script_thread
+    self._run_script(request.rerun_data)
+    │    │           │       └ <property object at 0x0000025A1A84BDD0>
+    │    │           └ ScriptRequest(type=<ScriptRequestType.RERUN: 'RERUN'>, _rerun_data=RerunData(widget_states=widgets {
+    │    │               id: "$$ID-d8d14a9bb459...
+    │    └ <function ScriptRunner._run_script at 0x0000025A1A9CA560>
+    └ ScriptRunner(_session_id='987a0c92-6b78-4916-9003-529e8d073816', _main_script_path='C:\\Users\\amans\\OneDrive\\Desktop\\math...
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 705, in _run_script
+    ) = exec_func_with_error_handling(code_to_exec, ctx)
+        │                             │             └ ScriptRunContext(session_id='987a0c92-6b78-4916-9003-529e8d073816', _enqueue=<bound method ScriptRunner._enqueue_forward_msg ...
+        │                             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x0000025A1BCA3C70>
+        └ <function exec_func_with_error_handling at 0x0000025A1A947D00>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\exec_code.py", line 129, in exec_func_with_error_handling
+    result = func()
+             └ <function ScriptRunner._run_script.<locals>.code_to_exec at 0x0000025A1BCA3C70>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\streamlit\runtime\scriptrunner\script_runner.py", line 689, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+         │     │      └ <member '__dict__' of 'module' objects>
+         │     └ <module '__main__' from 'C:\\Users\\amans\\OneDrive\\Desktop\\math-mentor-ai\\app.py'>
+         └ <code object <module> at 0x0000025A1BCB0660, file "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 1>
+
+> File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\app.py", line 72, in <module>
+    result = agent_manager.run_pipeline(problem_text)
+             │             │            └ 'Solve x^2 + 5x + 6 = 0'
+             │             └ <function AgentManager.run_pipeline at 0x0000025AA378A560>
+             └ <agents.agent_manager.AgentManager object at 0x0000025AA3ACB3D0>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\agent_manager.py", line 28, in run_pipeline
+    topic = self.router.classify(problem_text)
+            │    │      │        └ 'Solve x^2 + 5x + 6 = 0'
+            │    │      └ <function IntentRouterAgent.classify at 0x0000025A1BFC9F30>
+            │    └ <agents.intent_router_agent.IntentRouterAgent object at 0x0000025AA8ACCFD0>
+            └ <agents.agent_manager.AgentManager object at 0x0000025AA3ACB3D0>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\agents\intent_router_agent.py", line 44, in classify
+    response.raise_for_status()
+    │        └ <function Response.raise_for_status at 0x0000025A1BE92710>
+    └ <Response [400]>
+
+  File "C:\Users\amans\OneDrive\Desktop\math-mentor-ai\venv\lib\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+          │         │                        └ <Response [400]>
+          │         └ '400 Client Error: Bad Request for url: https://api.groq.com/openai/v1/chat/completions'
+          └ <class 'requests.exceptions.HTTPError'>
+
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://api.groq.com/openai/v1/chat/completions
+2026-03-08 14:23:00 | WARNING | agents.parser_agent:parse:70 | Parser response was not valid JSON
+2026-03-08 17:22:47 | WARNING | agents.parser_agent:parse:70 | Parser response was not valid JSON
