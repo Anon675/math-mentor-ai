@@ -13,7 +13,7 @@ class ExplainerAgent:
     def __init__(self):
 
         self.api_key = get_env("GROQ_API_KEY")
-        self.base_url = settings["api"]["grok_base_url"]
+        self.base_url = settings["api"]["groq_base_url"]
         self.model = settings["api"]["model"]
 
     def explain(self, problem_text: str, solution: str):

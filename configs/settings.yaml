@@ -4,8 +4,8 @@ app:
   environment: "development"
 
 api:
-  grok_base_url: "https://api.groq.com/openai/v1"
-  model: "llama-3.3-70b-versatile"
+  groq_base_url: "https://api.groq.com/openai/v1"
+  model: "llama3-70b-8192"
   timeout_seconds: 60
 
 rag:

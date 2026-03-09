@@ -11,7 +11,7 @@ class IntentRouterAgent:
 
     def __init__(self):
         self.api_key = get_env("GROQ_API_KEY")
-        self.base_url = settings["api"]["grok_base_url"]
+        self.base_url = settings["api"]["groq_base_url"]
         self.model = settings["api"]["model"]
 
     def classify(self, problem_text: str):
