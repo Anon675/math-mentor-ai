@@ -3,14 +3,12 @@ import easyocr
 import numpy as np
 from PIL import Image
 
-
 reader = easyocr.Reader(['en'], gpu=False)
 
 
 def extract_text_from_image(uploaded_file):
 
     image = Image.open(uploaded_file)
-
     image_np = np.array(image)
 
     result = reader.readtext(image_np)
@@ -27,8 +25,11 @@ def render_extraction(problem_input):
         st.text_area(
             "Extracted Problem",
             value=problem_input,
-            height=150
+            height=150,
+            key="extraction_text_preview"
         )
+
+        return problem_input
 
     else:
 
@@ -37,7 +38,8 @@ def render_extraction(problem_input):
         st.text_area(
             "Extracted Problem",
             value=extracted_text,
-            height=150
+            height=150,
+            key="extraction_image_preview"
         )
 
         return extracted_text
