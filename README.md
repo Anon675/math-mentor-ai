@@ -224,7 +224,7 @@ pip install -r requirements.txt
 # Environment Configuration
 
 Create `.env` file:
-GROK_API_KEY=your_api_key_here
+GROQ_API_KEY=your_api_key_here
 
 
 ---
@@ -256,7 +256,7 @@ Embeddings | Sentence Transformers |
 OCR | EasyOCR |
 Speech Recognition | Whisper |
 Math Engine | SymPy |
-LLM API | Grok |
+LLM API | Groq |
 
 ---
 
