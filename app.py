@@ -87,7 +87,7 @@ elif mode == "Image" and uploaded_file:
 
 st.markdown("### Extraction Preview")
 
-if isinstance(problem_text, str) and problem_text:
+if problem_text:
     render_extraction(problem_text)
 else:
     st.info("No input detected.")
