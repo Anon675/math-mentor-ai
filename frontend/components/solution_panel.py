@@ -1,14 +1,21 @@
 import streamlit as st
 
-def show_solution(solution, explanation, verification):
 
-    st.markdown("### Final Answer")
+def render_solution(result):
 
-    st.markdown("#### Solution")
-    st.write(solution)
+    if not isinstance(result, dict):
+        st.warning("Invalid result format.")
+        return
 
-    st.markdown("#### Explanation")
-    st.write(explanation)
+    solution = result.get("solution")
+    explanation = result.get("explanation")
 
-    st.markdown("#### Verification")
-    st.write(verification)
+    st.markdown("## 🧮 Step-by-Step Solution")
+
+    if explanation:
+        st.markdown("### Explanation")
+        st.write(explanation)
+
+    if solution:
+        st.success(f"Final Answer: {solution}")
+        st.success(f"Final Answer: {solution}")

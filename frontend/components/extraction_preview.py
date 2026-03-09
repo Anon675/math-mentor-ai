@@ -1,14 +1,23 @@
 import streamlit as st
 
-def show_extraction_preview(text, confidence=None):
 
-    st.markdown("### Extraction Preview")
+def render_extraction(problem_input):
+
+    if problem_input is None:
+        st.info("No input detected.")
+        return
+
+    extracted_text = None
+
+    if isinstance(problem_input, str):
+        extracted_text = problem_input
+
+    else:
+        extracted_text = getattr(problem_input, "name", "Uploaded file detected")
 
     st.text_area(
-        "Extracted Text",
-        value=text,
-        height=150
+        label="Extracted Problem",
+        value=extracted_text,
+        height=150,
+        disabled=True
     )
-
-    if confidence is not None:
-        st.caption(f"OCR/ASR Confidence: {round(confidence,3)}")

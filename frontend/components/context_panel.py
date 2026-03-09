@@ -1,12 +1,23 @@
 import streamlit as st
 
-def show_context(context_list):
 
-    st.markdown("### Retrieved Knowledge")
+def render_context(context_items):
 
-    if not context_list:
-        st.info("No context retrieved")
+    if not context_items:
+        st.info("No retrieved knowledge available.")
+        return
 
-    for i, ctx in enumerate(context_list):
-        with st.expander(f"Source {i+1}"):
-            st.write(ctx)
+    for idx, item in enumerate(context_items):
+
+        if isinstance(item, dict):
+
+            title = item.get("title", f"Source {idx+1}")
+            content = item.get("content", "")
+
+        else:
+
+            title = f"Source {idx+1}"
+            content = str(item)
+
+        with st.expander(title):
+            st.write(content)

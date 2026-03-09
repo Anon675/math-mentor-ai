@@ -1,10 +1,13 @@
 import requests
+
 from rag.retriever import Retriever
 from tools.sympy_solver import SympySolver
+
 from utils.config_loader import load_settings, load_prompts, get_env
 from utils.logger import get_logger
 
 logger = get_logger()
+
 settings = load_settings()
 prompts = load_prompts()
 
@@ -12,6 +15,7 @@ prompts = load_prompts()
 class SolverAgent:
 
     def __init__(self):
+
         self.api_key = get_env("GROK_API_KEY")
         self.base_url = settings["api"]["grok_base_url"]
         self.model = settings["api"]["model"]
@@ -21,40 +25,58 @@ class SolverAgent:
 
     def solve(self, problem_text: str):
 
-        retrieved_docs = self.retriever.retrieve(problem_text)
-        context = "\n".join(retrieved_docs)
+        try:
 
-        system_prompt = prompts["solver_agent"]["system_prompt"]
-        user_prompt = prompts["solver_agent"]["user_prompt_template"].format(
-            problem=problem_text,
-            context=context
-        )
+            retrieved_docs = self.retriever.retrieve(problem_text)
 
-        payload = {
-            "model": self.model,
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ]
-        }
+            context = "\n".join(retrieved_docs)
 
-        headers = {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json"
-        }
+            system_prompt = prompts["solver_agent"]["system_prompt"]
 
-        response = requests.post(
-            f"{self.base_url}/chat/completions",
-            headers=headers,
-            json=payload,
-            timeout=settings["api"]["timeout_seconds"]
-        )
+            user_prompt = prompts["solver_agent"]["user_prompt_template"].format(
+                problem=problem_text,
+                context=context
+            )
 
-        response.raise_for_status()
+            payload = {
+                "model": self.model,
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt}
+                ]
+            }
 
-        solution = response.json()["choices"][0]["message"]["content"]
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
 
-        return {
-            "solution": solution,
-            "retrieved_context": retrieved_docs
-        }
+            response = requests.post(
+                f"{self.base_url}/chat/completions",
+                headers=headers,
+                json=payload,
+                timeout=settings["api"]["timeout_seconds"]
+            )
+
+            response.raise_for_status()
+
+            raw_solution = response.json()["choices"][0]["message"]["content"]
+
+            # Extract only final answer
+            answer = raw_solution.split("\n")[-1]
+
+            return {
+                "solution": answer,
+                "steps": [],
+                "retrieved_context": retrieved_docs
+            }
+
+        except Exception:
+
+            logger.exception("SolverAgent failed")
+
+            return {
+                "solution": "Unable to compute solution.",
+                "steps": [],
+                "retrieved_context": []
+            }

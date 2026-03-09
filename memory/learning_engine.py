@@ -1,4 +1,3 @@
-from typing import Dict
 from utils.logger import get_logger
 from memory.memory_store import MemoryStore
 
@@ -19,18 +18,30 @@ class LearningEngine:
         verifier_result: str,
         feedback: str = None
     ):
+
+        record = {
+            "original_input": original_input,
+            "parsed_problem": parsed_problem,
+            "retrieved_context": retrieved_context,
+            "solution": solution,
+            "verifier_result": verifier_result,
+            "feedback": feedback
+        }
+
         try:
-            record = {
-                "original_input": original_input,
-                "parsed_problem": parsed_problem,
-                "retrieved_context": retrieved_context,
-                "solution": solution,
-                "verifier_result": verifier_result,
-                "feedback": feedback
-            }
-
             self.memory_store.store(record)
+        except Exception:
+            logger.exception("Failed to record interaction")
 
-        except Exception as e:
-            logger.exception("Failed to record learning interaction")
-            raise e
+    def record_feedback(
+        self,
+        original_input: str,
+        solution: str,
+        feedback: str
+    ):
+
+        try:
+            self.memory_store.update_feedback(original_input, feedback)
+            logger.info(f"Feedback recorded: {feedback}")
+        except Exception:
+            logger.exception("Failed to record feedback")

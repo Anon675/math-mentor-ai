@@ -1,28 +1,25 @@
-import sys
-from pathlib import Path
-from loguru import logger
+import logging
 
-LOG_DIR = Path("logs")
-LOG_DIR.mkdir(parents=True, exist_ok=True)
 
-LOG_FILE = LOG_DIR / "app.log"
+def get_logger(name=None):
 
-logger.remove()
+    if name is None:
+        name = __name__
 
-logger.add(
-    sys.stdout,
-    level="INFO",
-    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | {message}",
-)
+    logger = logging.getLogger(name)
 
-logger.add(
-    LOG_FILE,
-    rotation="10 MB",
-    retention="7 days",
-    compression="zip",
-    level="DEBUG",
-    format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {name}:{function}:{line} | {message}",
-)
+    if not logger.handlers:
 
-def get_logger():
+        logger.setLevel(logging.INFO)
+
+        handler = logging.StreamHandler()
+
+        formatter = logging.Formatter(
+            "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
+        )
+
+        handler.setFormatter(formatter)
+
+        logger.addHandler(handler)
+
     return logger

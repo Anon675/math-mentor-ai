@@ -1,111 +1,168 @@
 import streamlit as st
-import tempfile
+
 from agents.agent_manager import AgentManager
-from multimodal.image_input import ImageInputProcessor
-from multimodal.audio_input import AudioInputProcessor
-from multimodal.text_input import TextInputProcessor
-from frontend.pages.home import render_home
+
 from frontend.pages.upload_problem import render_upload
-from frontend.pages.results import render_results
-from frontend.components.extraction_preview import show_extraction_preview
-from frontend.components.feedback_buttons import feedback_buttons
-from hitl.feedback_handler import FeedbackHandler
+from frontend.components.extraction_preview import render_extraction
+from frontend.components.agent_trace_panel import render_agent_trace
+from frontend.components.context_panel import render_context
+from frontend.components.solution_panel import render_solution
+from frontend.components.feedback_buttons import render_feedback
+
 from utils.logger import get_logger
 
-logger = get_logger()
+
+logger = get_logger(__name__)
 
 
 st.set_page_config(
-    page_title="Math Mentor AI",
-    layout="wide"
+    page_title="Reliable Multimodal Math Mentor",
+    layout="wide",
+    initial_sidebar_state="collapsed"
 )
 
-if "result" not in st.session_state:
-    st.session_state.result = None
 
-if "problem_text" not in st.session_state:
-    st.session_state.problem_text = None
+st.markdown(
+"""
+<style>
+
+.block-container {
+    padding-top: 2rem;
+}
+
+.section-box {
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: #0e1117;
+    border: 1px solid #262730;
+}
+
+</style>
+""",
+unsafe_allow_html=True
+)
 
 
-render_home()
+st.title("Reliable Multimodal Math Mentor")
 
-mode, text_input, uploaded_file = render_upload()
+st.caption(
+"Upload, speak, or type a math problem. The AI mentor parses the question, retrieves knowledge, solves it step-by-step, verifies the reasoning, and explains the result."
+)
+
 
 agent_manager = AgentManager()
-image_processor = ImageInputProcessor()
-audio_processor = AudioInputProcessor()
-text_processor = TextInputProcessor()
+
+
+st.markdown("---")
+
+
+with st.container():
+
+    st.subheader("Input")
+
+    mode, text_input, uploaded_file = render_upload()
+
+
+# ------------------------------------------------
+# Normalize input so pipeline always receives text
+# ------------------------------------------------
 
 problem_text = None
-confidence = None
-
 
 if mode == "Text" and text_input:
-    processed = text_processor.process(text_input)
-    problem_text = processed["text"]
-    confidence = processed["confidence"]
+    problem_text = text_input
 
-elif mode == "Image" and uploaded_file is not None:
-    with tempfile.NamedTemporaryFile(delete=False) as tmp:
-        tmp.write(uploaded_file.read())
-        path = tmp.name
+elif mode == "Image" and uploaded_file:
+    problem_text = uploaded_file
 
-    processed = image_processor.process(path)
-    problem_text = processed["extracted_text"]
-    confidence = processed["confidence"]
+elif mode == "Audio" and text_input:
+    problem_text = text_input
 
-elif mode == "Audio" and uploaded_file is not None:
 
-    if isinstance(uploaded_file, str):
-        # recorded audio path
-        path = uploaded_file
-    else:
-        # uploaded audio file
-        with tempfile.NamedTemporaryFile(delete=False) as tmp:
-            tmp.write(uploaded_file.read())
-            path = tmp.name
+# ------------------------------------------------
+# Extraction Preview
+# ------------------------------------------------
 
-    processed = audio_processor.process(path)
-    problem_text = processed["transcript"]
-    confidence = processed["confidence"]
-
+st.markdown("### Extraction Preview")
 
 if problem_text:
-    show_extraction_preview(problem_text, confidence)
+    render_extraction(problem_text)
+else:
+    st.info("No input detected.")
 
-    if st.button("Solve Problem"):
-        try:
+
+st.markdown("")
+
+
+center_col1, center_col2, center_col3 = st.columns([1, 1, 1])
+
+with center_col2:
+    solve_clicked = st.button("Solve Problem", use_container_width=True)
+
+
+# ------------------------------------------------
+# Run pipeline
+# ------------------------------------------------
+
+if solve_clicked:
+
+    if not problem_text:
+        st.warning("Please provide a problem before solving.")
+        st.stop()
+
+    try:
+
+        with st.spinner("AI agents are solving the problem..."):
+
             result = agent_manager.run_pipeline(problem_text)
-            st.session_state.result = result
-            st.session_state.problem_text = problem_text
 
-        except Exception as e:
-            logger.exception("Pipeline failed")
-            st.error("Failed to process problem.")
+        trace = result.get("trace", [])
+        context = result.get("context", [])
+
+        st.markdown("---")
+
+        st.header("Results")
 
 
-if st.session_state.result:
+        left_col, right_col = st.columns([2, 1])
 
-    render_results(st.session_state.result)
 
-    correct, incorrect, comment = feedback_buttons()
+        # -------------------------
+        # Solution
+        # -------------------------
 
-    if correct or incorrect:
+        with left_col:
 
-        feedback_handler = FeedbackHandler()
+            st.markdown("### Solution")
 
-        feedback = "correct" if correct else "incorrect"
+            if result:
+                render_solution(result)
+            else:
+                st.warning("No solution produced by the pipeline.")
 
-        if incorrect and comment:
-            feedback = f"incorrect: {comment}"
 
-        feedback_handler.record_feedback(
-            original_input=st.session_state.problem_text,
-            parsed_problem=str(st.session_state.result["parsed_problem"]),
-            retrieved_context=str(st.session_state.result["context"]),
-            solution=st.session_state.result["solution"],
-            verifier_result=st.session_state.result["verification"],
-            feedback=feedback
-        )
+        # -------------------------
+        # Right panel
+        # -------------------------
 
-        st.success("Feedback recorded.")
+        with right_col:
+
+            st.markdown("### Agent Execution Trace")
+            render_agent_trace(trace)
+
+            st.markdown("")
+
+            st.markdown("### Retrieved Knowledge")
+            render_context(context)
+
+
+        st.markdown("---")
+
+        render_feedback(problem_text, result.get("solution"))
+
+
+    except Exception as e:
+
+        logger.exception("Pipeline failed")
+
+        st.error(f"Pipeline error: {str(e)}")

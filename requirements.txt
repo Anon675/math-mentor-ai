@@ -21,6 +21,7 @@ pytesseract
 easyocr
 
 openai-whisper
+ffmpeg-python
 
 sounddevice
 scipy
@@ -29,3 +30,6 @@ pyyaml
 tqdm
 rich
 loguru
+
+SpeechRecognition
+pydub
