@@ -12,30 +12,31 @@ def normalize_math_text(text: str):
 
     text = text.strip()
 
-    # Replace common OCR symbol mistakes
-    replacements = {
+    # Replace math symbols
+    symbol_map = {
         "÷": "/",
         "×": "*",
         "–": "-",
         "—": "-",
         "＝": "=",
         "＋": "+",
-        "−": "-",
-        "S": "5",
-        "O": "0",
-        "l": "1"
+        "−": "-"
     }
 
-    for k, v in replacements.items():
+    for k, v in symbol_map.items():
         text = text.replace(k, v)
 
-    # Convert patterns like x2 → x^2
+    # Fix powers like x2 → x^2
     text = re.sub(r'([a-zA-Z])\s*2\b', r'\1^2', text)
 
-    # Insert multiplication when number touches variable
+    # Fix multiplication: 5x → 5*x
     text = re.sub(r'(\d)([a-zA-Z])', r'\1*\2', text)
 
-    # Remove repeated spaces
+    # Fix OCR mistake only in math terms
+    text = re.sub(r'\bSx\b', '5x', text)
+    text = re.sub(r'\bS\s*=\s*', '5 = ', text)
+
+    # Clean spaces
     text = re.sub(r'\s+', ' ', text)
 
     return text
