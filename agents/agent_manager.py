@@ -13,31 +13,28 @@ logger = get_logger()
 class AgentManager:
 
     def __init__(self):
-
         self.parser = ParserAgent()
         self.router = IntentRouterAgent()
         self.solver = SolverAgent()
         self.verifier = VerifierAgent()
         self.explainer = ExplainerAgent()
-
         self.memory = LearningEngine()
 
-    def run_pipeline(self, problem_text: str):
+    def run_pipeline(self, problem_text):
+
+        if not isinstance(problem_text, str):
+            raise ValueError("Input problem must be text.")
 
         trace = []
 
-        # ------------------------------------------------
-        # 1. Check memory for similar problem
-        # ------------------------------------------------
-
+        # ---- Memory reuse ----
         try:
             similar = self.memory.memory_store.search_similar(problem_text)
 
             if similar:
-
                 trace.append({
                     "agent": "MemoryStore",
-                    "action": "Reused similar past solution",
+                    "action": "Reused similar solution",
                     "output": similar.get("solution")
                 })
 
@@ -48,17 +45,14 @@ class AgentManager:
                     "steps": [],
                     "context": similar.get("retrieved_context", []),
                     "verification": similar.get("verifier_result"),
-                    "explanation": "Solution reused from previous similar question.",
+                    "explanation": "Solution reused from memory.",
                     "trace": trace
                 }
 
         except Exception:
             logger.exception("Memory lookup failed")
 
-        # ------------------------------------------------
-        # 2. Normal pipeline
-        # ------------------------------------------------
-
+        # ---- Parser ----
         parsed = self.parser.parse(problem_text)
 
         trace.append({
@@ -67,6 +61,7 @@ class AgentManager:
             "output": str(parsed)
         })
 
+        # ---- Intent Router ----
         topic = self.router.classify(problem_text)
 
         trace.append({
@@ -75,6 +70,7 @@ class AgentManager:
             "output": topic
         })
 
+        # ---- Solver ----
         solution_output = self.solver.solve(problem_text)
 
         solution = solution_output.get("solution")
@@ -87,6 +83,7 @@ class AgentManager:
             "output": solution
         })
 
+        # ---- Verifier ----
         verification = self.verifier.verify(problem_text, solution)
 
         trace.append({
@@ -95,6 +92,7 @@ class AgentManager:
             "output": verification
         })
 
+        # ---- Explainer ----
         explanation = self.explainer.explain(problem_text, solution)
 
         trace.append({
@@ -103,12 +101,8 @@ class AgentManager:
             "output": explanation
         })
 
-        # ------------------------------------------------
-        # 3. Store interaction in memory
-        # ------------------------------------------------
-
+        # ---- Store memory ----
         try:
-
             self.memory.record_interaction(
                 original_input=problem_text,
                 parsed_problem=str(parsed),
@@ -117,7 +111,6 @@ class AgentManager:
                 verifier_result=verification,
                 feedback=None
             )
-
         except Exception:
             logger.exception("Memory recording failed")
 
