@@ -3,22 +3,36 @@ from audio_recorder_streamlit import audio_recorder
 import whisper
 import tempfile
 
-# Load Whisper model once
-model = whisper.load_model("base")
+
+@st.cache_resource
+def load_whisper():
+    """
+    Load Whisper model once and cache it.
+    """
+    return whisper.load_model("tiny")
+
+
+model = load_whisper()
 
 
 def transcribe_audio(audio_bytes):
 
     try:
-        with tempfile.NamedTemporaryFile(delete=False) as tmp:
+
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+
             tmp.write(audio_bytes)
+
             tmp_path = tmp.name
 
         result = model.transcribe(tmp_path)
 
         return result["text"]
 
-    except Exception:
+    except Exception as e:
+
+        print("Whisper transcription error:", e)
+
         return ""
 
 
@@ -96,6 +110,7 @@ def render_upload():
                 text_input = transcription
 
             else:
+
                 st.warning("Could not transcribe audio.")
 
         # Uploaded audio
@@ -120,6 +135,7 @@ def render_upload():
                 text_input = transcription
 
             else:
+
                 st.warning("Could not transcribe audio.")
 
     return mode, text_input, uploaded_file
