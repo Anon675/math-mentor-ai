@@ -23,7 +23,7 @@ class AgentManager:
     def run_pipeline(self, problem_text):
 
         if not isinstance(problem_text, str):
-            raise ValueError("Input problem must be text.")
+          problem_text = str(problem_text)
 
         trace = []
 
