@@ -77,8 +77,8 @@ elif mode == "Audio" and text_input:
     problem_text = text_input.strip()
 
 elif mode == "Image" and uploaded_file:
-    st.warning("Image uploaded. OCR extraction is required before solving.")
-    problem_text = None
+    extracted_text = render_extraction(uploaded_file)
+    problem_text = extracted_text
 
 
 # -------------------------------

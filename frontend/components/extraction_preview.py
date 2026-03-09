@@ -1,23 +1,43 @@
 import streamlit as st
+import easyocr
+import numpy as np
+from PIL import Image
+
+
+reader = easyocr.Reader(['en'], gpu=False)
+
+
+def extract_text_from_image(uploaded_file):
+
+    image = Image.open(uploaded_file)
+
+    image_np = np.array(image)
+
+    result = reader.readtext(image_np)
+
+    text = " ".join([item[1] for item in result])
+
+    return text
 
 
 def render_extraction(problem_input):
 
-    if problem_input is None:
-        st.info("No input detected.")
-        return
-
-    extracted_text = None
-
     if isinstance(problem_input, str):
-        extracted_text = problem_input
+
+        st.text_area(
+            "Extracted Problem",
+            value=problem_input,
+            height=150
+        )
 
     else:
-        extracted_text = getattr(problem_input, "name", "Uploaded file detected")
 
-    st.text_area(
-        label="Extracted Problem",
-        value=extracted_text,
-        height=150,
-        disabled=True
-    )
+        extracted_text = extract_text_from_image(problem_input)
+
+        st.text_area(
+            "Extracted Problem",
+            value=extracted_text,
+            height=150
+        )
+
+        return extracted_text
