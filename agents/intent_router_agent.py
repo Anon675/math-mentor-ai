@@ -10,7 +10,7 @@ prompts = load_prompts()
 class IntentRouterAgent:
 
     def __init__(self):
-        self.api_key = get_env("GROK_API_KEY")
+        self.api_key = get_env("GROQ_API_KEY")
         self.base_url = settings["api"]["grok_base_url"]
         self.model = settings["api"]["model"]
 
