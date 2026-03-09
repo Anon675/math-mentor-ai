@@ -71,13 +71,15 @@ class SolverAgent:
             )
 
             payload = {
-                "model": self.model,
-                "messages": [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": user_prompt}
-                ],
-                "temperature": 0
-            }
+               "model": self.model,
+    "messages": [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt}
+    ],
+    "temperature": 0,
+    "max_tokens": 1024,
+    "stream": False
+}
 
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
